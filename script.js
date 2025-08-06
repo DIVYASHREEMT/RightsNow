@@ -23,19 +23,29 @@ async function sendMessage() {
   input.value = "";
 
   try {
+    // Set up a timeout controller for 20 seconds
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s
+
     const response = await fetch(RELAY_WEBHOOK_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question: message }), 
+      body: JSON.stringify({ question: message }),
+      signal: controller.signal
     });
 
-    const replyText = await response.text(); 
+    clearTimeout(timeoutId);
 
-    botMsg.textContent = replyText;
+    const replyText = await response.text();
+    botMsg.textContent = replyText || "🤖 I couldn't understand. Please try again.";
   } catch (error) {
-    botMsg.textContent = "⚠️ Sorry, something went wrong. Please try again.";
+    if (error.name === 'AbortError') {
+      botMsg.textContent = "⏱️ Sorry, the assistant took too long to respond.";
+    } else {
+      botMsg.textContent = "⚠️ Sorry, something went wrong. Please try again.";
+    }
     console.error("Error:", error);
   }
 
