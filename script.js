@@ -25,7 +25,7 @@ async function sendMessage() {
   try {
     // Set up a timeout controller for 20 seconds
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 40000); // 40s
+    const timeoutId = setTimeout(() => controller.abort(), 50000); // 50s
 
     const response = await fetch(RELAY_WEBHOOK_URL, {
       method: "POST",
