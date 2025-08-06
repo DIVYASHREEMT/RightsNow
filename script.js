@@ -1,4 +1,4 @@
-const RELAY_WEBHOOK_URL = "https://relay.hidden/secure-url"; //Replace with your actual Relay URL
+const RELAY_WEBHOOK_URL = "https://hook.relay.app/api/v1/playbook/cmdyscoly0a9y0olzckvn44z2/trigger/zq5JI8d67CJri0e291s1hA"; //Replace with your actual Relay URL
 
 async function sendMessage() {
   const input = document.getElementById("userInput");
